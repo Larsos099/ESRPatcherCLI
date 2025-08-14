@@ -101,7 +101,7 @@ unsigned int Patcher::patch(const std::vector<std::string> &params) {
 
     file.seekg(128 * LBA_SIZE, std::ios::beg);
     file.write(reinterpret_cast<const char *>(dvdvdata.data()), dvdvdata.size());
-
+    std::cout << "Applied ESR successfully!" << std::endl;
     file.close();
     return 0;
 }
@@ -140,6 +140,7 @@ unsigned int Patcher::unpatch(const std::vector<std::string> &params) {
 
     }
     file.close();
+    std::cout << "Removed ESR successfully!" << std::endl;
     return 0;
 }
 

@@ -45,5 +45,7 @@ unpatch
 patch
 quit
 exit
+esr> patch "C:\Users\Lars\Documents\Ripped\Final Fantasy X.iso"
+Applied ESR successfully!
 esr>
 ```
