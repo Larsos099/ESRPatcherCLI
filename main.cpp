@@ -18,6 +18,7 @@ int main() {
     CommandHandler::addFunction("patch", [](const std::vector<std::string> &params) {return Patcher::patch(params);});
     CommandHandler::addFunction("unpatch", [](const std::vector<std::string> &params) {return Patcher::unpatch(params);});
     CommandHandler::addFunction("help", functions::helpCmd);
+    CommandHandler::addFunction("list", functions::listFiles);
     while (isRunning) {
         std::string command{};
         std::cout << "esr> " << std::flush;

@@ -153,3 +153,17 @@ unsigned short Patcher::crc_itu_t(unsigned short crc, const char *buffer, size_t
         crc = crc_itu_t_byte(crc, *buffer++);
     return crc;
 }
+
+
+unsigned int Patcher::isPatched(const std::vector<std::string> &params) {
+    std::fstream file(params[0], std::ios::in | std::ios::out | std::ios::binary);
+    std::array<char, LBA_SIZE> _buf{};
+    readPosition(file, _buf, 14 * LBA_SIZE);
+
+    if (std::string_view(_buf.data() + 25, 4) == "+NSR") {
+        file.close();
+        throw std::runtime_error("Already patched");
+    }
+    file.close();
+    return 0;
+}

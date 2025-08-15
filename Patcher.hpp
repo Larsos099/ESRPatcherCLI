@@ -26,6 +26,7 @@ class Patcher final {
 
     public:
     Patcher() = delete;
+    static unsigned int isPatched(const std::vector<std::string> &params);
     static unsigned int patch(const std::vector<std::string> &params);
     static unsigned int unpatch(const std::vector<std::string> &params);
 };
