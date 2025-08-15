@@ -110,12 +110,21 @@ unsigned int Patcher::unpatch(const std::vector<std::string> &params) {
     if (params.empty()) {
         return 97;
     }
+    try {
+        Patcher::isPatched(params);
+    } catch (const std::exception &ex) {
+        if (std::string_view(ex.what()).contains("File is not ESR Patched")) {
+            throw;
+        }
+
+    }
     std::array<char, LBA_SIZE> buffer{};
     fs::path filePath(params[0]);
     unsigned short i = 0;
     bool is_udf = false;
     std::fstream file(filePath, std::ios::in | std::ios::out | std::ios::binary);
     if (!file.is_open()) throw std::runtime_error("File couldn't be opened");
+
     for (i = 1; i < 64; i++) {
         readPosition(file, buffer, LBA_SIZE * i + 32768);
         if (std::string_view(buffer.data() + 1, 3) == "NSR") {
@@ -164,6 +173,9 @@ unsigned int Patcher::isPatched(const std::vector<std::string> &params) {
         file.close();
         throw std::runtime_error("Already patched");
     }
-    file.close();
+    else {
+        file.close();
+        throw std::runtime_error("File is not ESR Patched");
+    }
     return 0;
 }
